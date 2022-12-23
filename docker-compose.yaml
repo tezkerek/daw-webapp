@@ -1,0 +1,12 @@
+version: '3.1'
+
+services:
+  db:
+    image: docker.io/postgres:15.1
+    ports:
+      - "5432:5432"
+    restart: always
+    environment:
+      POSTGRES_USER: debugwebapp
+      POSTGRES_PASSWORD: debugsecret
+      POSTGRES_DB: debugwebapp

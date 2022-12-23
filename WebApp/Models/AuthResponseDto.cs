@@ -2,5 +2,5 @@ namespace WebApp.Models;
 
 public class AuthResponseDto
 {
-    public string Token { get; set; }
+    public required string Token { get; set; }
 }

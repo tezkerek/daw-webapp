@@ -2,5 +2,6 @@ namespace WebApp;
 
 public class AppSettings
 {
-    public string JwtSecret { get; set; } = string.Empty;
+    public required string JwtSecret { get; set; }
+    public required string DbConnectionString { get; set; }
 }

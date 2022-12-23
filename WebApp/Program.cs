@@ -13,7 +13,10 @@ builder.Services.AddSwaggerGen();
 // builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 var appSettings = builder.Configuration.Get<AppSettings>()!;
 
-builder.Services.AddJwtAuthentication(appSettings);
+builder.Services.SetupScopedServices();
+builder.Services.SetupDatabase(appSettings);
+builder.Services.SetupIdentity();
+builder.Services.SetupJwtAuthentication(appSettings);
 
 var app = builder.Build();
 
@@ -26,6 +29,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
