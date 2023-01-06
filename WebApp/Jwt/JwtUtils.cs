@@ -17,20 +17,24 @@ public class JwtUtils : IJwtUtils
 
     public string Generate(Guid guid)
     {
-        return Generate(new[] {new Claim("id", guid.ToString())});
+        return Generate(new[] { new Claim("id", guid.ToString()) });
     }
 
     public string Generate(IEnumerable<Claim> claims)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
-        var appPrivateKey = Encoding.ASCII.GetBytes(_appSettings.JwtSecret);
+        var jwtSecret = Encoding.UTF8.GetBytes(_appSettings.JwtSecret);
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(claims),
             Expires = DateTime.UtcNow.AddDays(10),
-            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(appPrivateKey),
-                SecurityAlgorithms.HmacSha256Signature)
+            SigningCredentials = new SigningCredentials(
+                new SymmetricSecurityKey(jwtSecret),
+                SecurityAlgorithms.HmacSha256Signature
+            ),
+            Issuer = _appSettings.JwtIssuer,
+            Audience = _appSettings.JwtAudience,
         };
 
         var token = tokenHandler.CreateToken(tokenDescriptor);
@@ -54,16 +58,20 @@ public class JwtUtils : IJwtUtils
 
         try
         {
-            tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken validatedToken);
+            tokenHandler.ValidateToken(
+                token,
+                tokenValidationParameters,
+                out SecurityToken validatedToken
+            );
 
-            var jwtToken = (JwtSecurityToken) validatedToken;
+            var jwtToken = (JwtSecurityToken)validatedToken;
             var idClaim = jwtToken.Claims.FirstOrDefault(x => x.Type == "id");
 
             if (idClaim == null)
             {
                 return Guid.Empty;
             }
-            
+
             var userId = new Guid(idClaim.Value);
 
             return userId;

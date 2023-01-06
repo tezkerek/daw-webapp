@@ -10,7 +10,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
+builder.Services.AddOptions<AppSettings>();
+builder.Services.Configure<AppSettings>(builder.Configuration);
+
 var appSettings = builder.Configuration.Get<AppSettings>()!;
 
 builder.Services.SetupScopedServices();

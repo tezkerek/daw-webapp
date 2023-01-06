@@ -61,9 +61,18 @@ public static class ServiceExtensions
             options =>
             {
                 options.SaveToken = true;
+                
                 var jwtBytes = System.Text.Encoding.UTF8.GetBytes(appSettings.JwtSecret);
                 options.TokenValidationParameters.IssuerSigningKey =
                     new SymmetricSecurityKey(jwtBytes);
+
+                options.TokenValidationParameters.ValidIssuer = appSettings.JwtIssuer;
+                options.TokenValidationParameters.ValidAudience = appSettings.JwtAudience;
+                options.TokenValidationParameters.ValidateIssuer = true;
+                options.TokenValidationParameters.ValidateAudience = true;
+                options.TokenValidationParameters.ValidateLifetime = false;
+                options.TokenValidationParameters.ValidateIssuerSigningKey = true;
+                
             }
         );
 
