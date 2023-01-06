@@ -20,6 +20,11 @@ class UserRepository : IUserRepository
         return await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
     }
 
+    public async Task<User?> FindByIdAsync(string id)
+    {
+        return await _userManager.FindByIdAsync(id);
+    }
+
     public async Task<User?> CreateAsync(string email, string password)
     {
         var user = new User

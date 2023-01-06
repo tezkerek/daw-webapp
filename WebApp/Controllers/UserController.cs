@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebApp.Extensions;
 using WebApp.Models;
 using WebApp.Services;
 
@@ -18,13 +20,42 @@ public class UserController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Register(RegistrationRequestDto registrationInfo)
     {
-        var result = await _userService.CreateAsync(registrationInfo.Email, registrationInfo.Password);
+        var createdUser = await _userService.CreateAsync(
+            registrationInfo.Email,
+            registrationInfo.Password
+        );
 
-        if (result == null)
+        if (createdUser == null)
         {
             return BadRequest();
         }
 
-        return Ok(result);
+        var userDetail = new UserDetailDto(createdUser);
+        return CreatedAtAction(
+            nameof(Detail),
+            new { id = createdUser.Id.ToString() },
+            userDetail
+        );
+    }
+
+    [HttpGet("{id}", Name = nameof(Detail))]
+    [Authorize]
+    public async Task<IActionResult> Detail(string id)
+    {
+        var currentUserId = this.GetCurrentUserId();
+        if (id != currentUserId)
+        {
+            return Forbid();
+        }
+
+        var user = await _userService.FindByIdAsync(id);
+
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        var userDetail = new UserDetailDto(user);
+        return Ok(userDetail);
     }
 }

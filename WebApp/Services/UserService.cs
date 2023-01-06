@@ -17,6 +17,11 @@ public class UserService : IUserService
         return await _userRepository.FindByEmailAsync(email);
     }
 
+    public async Task<User?> FindByIdAsync(string id)
+    {
+        return await _userRepository.FindByIdAsync(id);
+    }
+
     public async Task<User?> CreateAsync(string email, string password)
     {
         return await _userRepository.CreateAsync(email, password);

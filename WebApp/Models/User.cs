@@ -15,8 +15,8 @@ public class User : IdentityUser<Guid>, IBaseEntity
     public override required string PasswordHash { get; set; }
 
     [Required]
-    public DateTime DateCreated { get; set; } = DateTime.Now;
+    public DateTime DateCreated { get; set; } = DateTime.Now.ToUniversalTime();
 
     [Required]
-    public DateTime DateModified { get; set; } = DateTime.Now;
+    public DateTime DateModified { get; set; } = DateTime.Now.ToUniversalTime();
 }
