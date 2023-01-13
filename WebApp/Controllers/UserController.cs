@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebApp.Dtos;
 using WebApp.Extensions;
-using WebApp.Models;
 using WebApp.Services;
 
 namespace WebApp.Controllers;
@@ -25,10 +25,7 @@ public class UserController : ControllerBase
             registrationInfo.Password
         );
 
-        if (createdUser == null)
-        {
-            return BadRequest();
-        }
+        if (createdUser == null) return BadRequest();
 
         var userDetail = new UserDetailDto(createdUser);
         return CreatedAtAction(
@@ -43,17 +40,11 @@ public class UserController : ControllerBase
     public async Task<IActionResult> Detail(string id)
     {
         var currentUserId = this.GetCurrentUserId();
-        if (id != currentUserId)
-        {
-            return Forbid();
-        }
+        if (id != currentUserId) return Forbid();
 
         var user = await _userService.FindByIdAsync(id);
 
-        if (user == null)
-        {
-            return NotFound();
-        }
+        if (user == null) return NotFound();
 
         var userDetail = new UserDetailDto(user);
         return Ok(userDetail);
@@ -64,10 +55,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> Delete(string id)
     {
         var currentUserId = this.GetCurrentUserId();
-        if (id != currentUserId)
-        {
-            return Forbid();
-        }
+        if (id != currentUserId) return Forbid();
 
         var wasDeleted = await _userService.DeleteAsync(id);
 

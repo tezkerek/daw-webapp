@@ -61,16 +61,13 @@ public class JwtUtils : IJwtUtils
             tokenHandler.ValidateToken(
                 token,
                 tokenValidationParameters,
-                out SecurityToken validatedToken
+                out var validatedToken
             );
 
             var jwtToken = (JwtSecurityToken)validatedToken;
             var idClaim = jwtToken.Claims.FirstOrDefault(x => x.Type == "id");
 
-            if (idClaim == null)
-            {
-                return Guid.Empty;
-            }
+            if (idClaim == null) return Guid.Empty;
 
             var userId = new Guid(idClaim.Value);
 

@@ -1,7 +1,8 @@
+using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using WebApp.Jwt;
 using WebApp.Models;
 using WebApp.Repositories;
@@ -61,8 +62,8 @@ public static class ServiceExtensions
             options =>
             {
                 options.SaveToken = true;
-                
-                var jwtBytes = System.Text.Encoding.UTF8.GetBytes(appSettings.JwtSecret);
+
+                var jwtBytes = Encoding.UTF8.GetBytes(appSettings.JwtSecret);
                 options.TokenValidationParameters.IssuerSigningKey =
                     new SymmetricSecurityKey(jwtBytes);
 
@@ -72,7 +73,6 @@ public static class ServiceExtensions
                 options.TokenValidationParameters.ValidateAudience = true;
                 options.TokenValidationParameters.ValidateLifetime = false;
                 options.TokenValidationParameters.ValidateIssuerSigningKey = true;
-                
             }
         );
 

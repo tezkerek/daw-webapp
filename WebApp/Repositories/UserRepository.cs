@@ -4,7 +4,7 @@ using WebApp.Models;
 
 namespace WebApp.Repositories;
 
-class UserRepository : IUserRepository
+internal class UserRepository : IUserRepository
 {
     private readonly AppDbContext _dbContext;
     private readonly UserManager<User> _userManager;
@@ -31,20 +31,15 @@ class UserRepository : IUserRepository
         {
             UserName = email,
             Email = email,
-            PasswordHash = string.Empty
+            PasswordHash = string.Empty,
         };
 
         var result = await _userManager.CreateAsync(user, password);
 
         if (result.Succeeded)
-        {
             return user;
-        }
-        else
-        {
-            // TODO: How to return errors?
-            return null;
-        }
+        // TODO: How to return errors?
+        return null;
     }
 
     public async Task<bool?> DeleteAsync(string id)

@@ -1,14 +1,15 @@
 using Microsoft.AspNetCore.Identity;
+using WebApp.Dtos;
 using WebApp.Jwt;
 using WebApp.Models;
 
 namespace WebApp.Services;
 
-class AuthService : IAuthService
+internal class AuthService : IAuthService
 {
     private readonly IJwtUtils _jwtUtils;
-    private readonly IUserService _userService;
     private readonly UserManager<User> _userManager;
+    private readonly IUserService _userService;
 
     public AuthService(IJwtUtils jwtUtils, IUserService userService, UserManager<User> userManager)
     {
@@ -21,10 +22,7 @@ class AuthService : IAuthService
     {
         var user = await _userService.FindByEmailAsync(authRequest.Email);
 
-        if (user == null)
-        {
-            return null;
-        }
+        if (user == null) return null;
 
         var verificationResult =
             _userManager.PasswordHasher.VerifyHashedPassword(

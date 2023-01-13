@@ -1,13 +1,14 @@
 using System.Diagnostics.CodeAnalysis;
+using WebApp.Models;
 
-namespace WebApp.Models;
+namespace WebApp.Dtos;
 
 public class UserDetailDto
 {
     public UserDetailDto()
     {
     }
-    
+
     [SetsRequiredMembers]
     public UserDetailDto(User user) : this()
     {

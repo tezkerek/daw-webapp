@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using WebApp.Models;
+using WebApp.Dtos;
 using WebApp.Services;
 
 namespace WebApp.Controllers;
@@ -20,10 +20,7 @@ public class AuthController : ControllerBase
     {
         var result = await _authService.Authenticate(authRequestInfo);
 
-        if (result == null)
-        {
-            return Forbid();
-        }
+        if (result == null) return Forbid();
 
         return Ok(result);
     }
