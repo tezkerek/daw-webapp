@@ -46,4 +46,12 @@ class UserRepository : IUserRepository
             return null;
         }
     }
+
+    public async Task<bool?> DeleteAsync(string id)
+    {
+        var user = await FindByIdAsync(id);
+        if (user == null) return false;
+        var result = await _userManager.DeleteAsync(user);
+        return result.Succeeded;
+    }
 }

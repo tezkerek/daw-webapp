@@ -58,4 +58,24 @@ public class UserController : ControllerBase
         var userDetail = new UserDetailDto(user);
         return Ok(userDetail);
     }
+
+    [HttpDelete("{id}")]
+    [Authorize]
+    public async Task<IActionResult> Delete(string id)
+    {
+        var currentUserId = this.GetCurrentUserId();
+        if (id != currentUserId)
+        {
+            return Forbid();
+        }
+
+        var wasDeleted = await _userService.DeleteAsync(id);
+
+        return wasDeleted switch
+        {
+            null => NotFound(),
+            true => NoContent(),
+            false => BadRequest(),
+        };
+    }
 }

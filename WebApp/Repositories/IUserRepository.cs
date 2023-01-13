@@ -10,4 +10,6 @@ public interface IUserRepository : IGenericRepository<User>
     Task<User?> FindByIdAsync(string id);
 
     public Task<User?> CreateAsync(string email, string password);
+    
+    public Task<bool?> DeleteAsync(string id);
 }
