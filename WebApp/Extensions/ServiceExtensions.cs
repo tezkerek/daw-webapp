@@ -18,8 +18,10 @@ public static class ServiceExtensions
 
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<ISellerService, SellerService>();
 
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ISellerRepository, SellerRepository>();
 
         return services;
     }
