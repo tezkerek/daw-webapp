@@ -9,6 +9,6 @@ public class BaseEntity : IBaseEntity
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public Guid Id { get; set; }
 
-    public DateTime DateCreated { get; set; }
-    public DateTime DateModified { get; set; }
+    public DateTime DateCreated { get; set; } = DateTime.Now.ToUniversalTime();
+    public DateTime DateModified { get; set; } = DateTime.Now.ToUniversalTime();
 }

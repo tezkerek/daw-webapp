@@ -6,6 +6,9 @@ namespace WebApp;
 
 public class AppDbContext : IdentityDbContext<User, UserRole, Guid>
 {
+    public DbSet<Seller> Sellers { get; set; }
+    public DbSet<Ad> Ads { get; set; }
+
     public AppDbContext(DbContextOptions options) : base(options)
     {
     }

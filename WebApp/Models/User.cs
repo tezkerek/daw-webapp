@@ -19,4 +19,8 @@ public class User : IdentityUser<Guid>, IBaseEntity
 
     [Required]
     public DateTime DateModified { get; set; } = DateTime.Now.ToUniversalTime();
+
+    public Seller? SellerProfile { get; set; }
+
+    public ICollection<Ad> FavoriteAds { get; set; }
 }
