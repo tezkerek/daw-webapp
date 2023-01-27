@@ -17,7 +17,7 @@ public class UserService : IUserService
         return await _userRepository.FindByEmailAsync(email);
     }
 
-    public async Task<User?> FindByIdAsync(string id)
+    public async Task<User?> FindByIdAsync(Guid id)
     {
         return await _userRepository.FindByIdAsync(id);
     }
@@ -27,7 +27,7 @@ public class UserService : IUserService
         return await _userRepository.CreateAsync(email, password);
     }
 
-    public async Task<bool?> DeleteAsync(string id)
+    public async Task<bool?> DeleteAsync(Guid id)
     {
         return await _userRepository.DeleteAsync(id);
     }

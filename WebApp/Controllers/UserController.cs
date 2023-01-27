@@ -37,7 +37,7 @@ public class UserController : ControllerBase
 
     [HttpGet("{id}", Name = nameof(Detail))]
     [Authorize]
-    public async Task<IActionResult> Detail(string id)
+    public async Task<IActionResult> Detail(Guid id)
     {
         var currentUserId = this.GetCurrentUserId();
         if (id != currentUserId) return Forbid();
@@ -52,9 +52,10 @@ public class UserController : ControllerBase
 
     [HttpDelete("{id}")]
     [Authorize]
-    public async Task<IActionResult> Delete(string id)
+    public async Task<IActionResult> Delete(Guid id)
     {
         var currentUserId = this.GetCurrentUserId();
+        if (currentUserId == null) return Unauthorized();
         if (id != currentUserId) return Forbid();
 
         var wasDeleted = await _userService.DeleteAsync(id);

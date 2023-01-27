@@ -20,9 +20,9 @@ internal class UserRepository : IUserRepository
         return await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
     }
 
-    public async Task<User?> FindByIdAsync(string id)
+    public async Task<User?> FindByIdAsync(Guid id)
     {
-        return await _userManager.FindByIdAsync(id);
+        return await _userManager.FindByIdAsync(id.ToString());
     }
 
     public async Task<User?> CreateAsync(string email, string password)
@@ -42,7 +42,7 @@ internal class UserRepository : IUserRepository
         return null;
     }
 
-    public async Task<bool?> DeleteAsync(string id)
+    public async Task<bool?> DeleteAsync(Guid id)
     {
         var user = await FindByIdAsync(id);
         if (user == null) return false;
