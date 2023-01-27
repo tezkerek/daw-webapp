@@ -12,12 +12,12 @@ public class SellerService : ISellerService
         _sellerRepository = sellerRepository;
     }
 
-    public async Task<Seller?> FindByNameAsync(string name)
+    public async Task<Seller?> FindByNameAsync(string name, bool includeAds = false)
     {
-        return await _sellerRepository.FindByNameAsync(name);
+        return await _sellerRepository.FindByNameAsync(name, includeAds);
     }
 
-    public async Task<Seller?> CreateAsync(Seller seller)
+    public async Task<Seller> CreateAsync(Seller seller)
     {
         return await _sellerRepository.CreateAsync(seller);
     }

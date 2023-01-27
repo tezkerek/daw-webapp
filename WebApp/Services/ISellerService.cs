@@ -4,7 +4,7 @@ namespace WebApp.Services;
 
 public interface ISellerService
 {
-    public Task<Seller?> FindByNameAsync(string name);
+    public Task<Seller?> FindByNameAsync(string name, bool includeAds = false);
 
     public Task<Seller> CreateAsync(Seller seller);
 

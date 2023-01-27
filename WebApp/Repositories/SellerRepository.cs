@@ -13,8 +13,14 @@ public class SellerRepository : GenericRepository<Seller>, ISellerRepository
         _dbContext = dbContext;
     }
 
-    public async Task<Seller?> FindByNameAsync(string name)
+    public async Task<Seller?> FindByNameAsync(string name, bool includeAds = false)
     {
-        return await _dbContext.Sellers.FirstOrDefaultAsync(seller => seller.Name == name);
+        var query = _dbContext.Sellers.AsQueryable();
+        if (includeAds)
+        {
+            query = query.Include(seller => seller.Ads.OrderByDescending(ad => ad.DateCreated));
+        }
+
+        return await query.FirstOrDefaultAsync(seller => seller.Name == name);
     }
 }

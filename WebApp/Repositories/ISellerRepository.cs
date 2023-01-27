@@ -5,5 +5,5 @@ namespace WebApp.Repositories;
 
 public interface ISellerRepository : IGenericRepository<Seller>
 {
-    public Task<Seller?> FindByNameAsync(string name);
+    public Task<Seller?> FindByNameAsync(string name, bool includeAds = false);
 }

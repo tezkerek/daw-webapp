@@ -20,10 +20,10 @@ public class SellerController : ControllerBase
     [HttpGet("{name}")]
     public async Task<IActionResult> Detail(string name)
     {
-        var seller = await _sellerService.FindByNameAsync(name);
+        var seller = await _sellerService.FindByNameAsync(name, includeAds: true);
 
         if (seller == null) return NotFound();
-        return Ok(seller);
+        return Ok(new SellerDetailDto(seller));
     }
 
     [HttpPost]
@@ -43,6 +43,6 @@ public class SellerController : ControllerBase
 
         var createdSeller = await _sellerService.CreateAsync(seller);
 
-        return Ok(createdSeller);
+        return Ok(new SellerDetailDto(createdSeller));
     }
 }
