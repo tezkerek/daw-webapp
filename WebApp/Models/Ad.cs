@@ -18,9 +18,9 @@ public class Ad : BaseEntity
     public required bool IsActive { get; set; }
 
     [Required]
-    public required Guid SellerId { get; set; }
+    public Guid SellerId { get; set; }
 
-    public required Seller Seller { get; set; }
-    
-    public required ICollection<User> WatchingUsers { get; set; }
+    public Seller Seller { get; set; } = null!;
+
+    public ICollection<User> WatchingUsers { get; set; } = null!;
 }

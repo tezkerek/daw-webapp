@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Models.Base;
 
@@ -17,7 +16,7 @@ public class Seller : BaseEntity
     [Required]
     public Guid UserId { get; set; }
 
-    public User User { get; set; }
+    public User User { get; set; } = null!;
 
-    public ICollection<Ad> Ads { get; set; }
+    public ICollection<Ad> Ads { get; set; } = null!;
 }

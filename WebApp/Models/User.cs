@@ -12,7 +12,7 @@ public class User : IdentityUser<Guid>, IBaseEntity
 
     [ProtectedPersonalData]
     [Required]
-    public override required string PasswordHash { get; set; }
+    public override string PasswordHash { get; set; } = string.Empty;
 
     [Required]
     public DateTime DateCreated { get; set; } = DateTime.Now.ToUniversalTime();
@@ -22,5 +22,5 @@ public class User : IdentityUser<Guid>, IBaseEntity
 
     public Seller? SellerProfile { get; set; }
 
-    public ICollection<Ad> FavoriteAds { get; set; }
+    public ICollection<Ad> FavoriteAds { get; set; } = null!;
 }
