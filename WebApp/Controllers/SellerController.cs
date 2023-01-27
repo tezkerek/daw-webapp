@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Dtos;
+using WebApp.Extensions;
 using WebApp.Models;
 using WebApp.Services;
 
@@ -25,17 +27,19 @@ public class SellerController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> Create([FromBody] SellerCreateRequestDto sellerInfo)
     {
+        var currentUserId = this.GetCurrentUserId();
+        if (currentUserId is null) return Unauthorized();
+
         var seller = new Seller
         {
             Name = sellerInfo.Name,
             PhoneNumber = sellerInfo.PhoneNumber,
+            // TODO: Allow admin to create seller for any user
+            UserId = currentUserId.Value,
         };
-        if (sellerInfo.UserId is { } guid)
-        {
-            seller.UserId = guid;
-        }
 
         var createdSeller = await _sellerService.CreateAsync(seller);
 
