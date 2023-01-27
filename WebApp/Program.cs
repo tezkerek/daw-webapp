@@ -1,5 +1,6 @@
 using WebApp;
 using WebApp.Extensions;
+using WebApp.Seeders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,13 +21,19 @@ builder.Services.SetupDatabase(appSettings);
 builder.Services.SetupIdentity();
 builder.Services.SetupJwtAuthentication(appSettings);
 
+builder.Services.AddTransient<AppSeeder>();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    var seedTask = app.UseSeeder();
+
+    // Configure the HTTP request pipeline.
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    await seedTask;
 }
 
 app.UseHttpsRedirection();

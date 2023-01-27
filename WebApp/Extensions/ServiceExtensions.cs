@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using WebApp.Jwt;
 using WebApp.Models;
 using WebApp.Repositories;
+using WebApp.Seeders;
 using WebApp.Services;
 
 namespace WebApp.Extensions;
@@ -79,5 +80,14 @@ public static class ServiceExtensions
         );
 
         return services;
+    }
+
+    public static async Task<IApplicationBuilder> UseSeeder(this IApplicationBuilder app)
+    {
+        using var scope = app.ApplicationServices.CreateScope();
+        var seeder = scope.ServiceProvider.GetService<AppSeeder>()!;
+        await seeder.Seed();
+
+        return app;
     }
 }
