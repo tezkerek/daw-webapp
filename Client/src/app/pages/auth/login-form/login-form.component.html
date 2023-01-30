@@ -1,0 +1,14 @@
+<div class="form-container">
+  <mat-card>
+    <h1>Login</h1>
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input type="text" matInput [formControl]="emailControl"/>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input type="password" matInput [formControl]="passwordControl"/>
+    </mat-form-field>
+    <button mat-raised-button color="primary">Submit</button>
+  </mat-card>
+</div>
