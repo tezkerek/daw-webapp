@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -14,6 +15,7 @@ import { AuthRoutingModule } from './auth-routing.module';
   declarations: [LoginFormComponent],
   imports: [
     CommonModule,
+    RouterModule,
     AuthRoutingModule,
     ReactiveFormsModule,
     MatCardModule,

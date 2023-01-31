@@ -1,14 +1,17 @@
 <div class="form-container">
   <mat-card>
     <h1>Login</h1>
-    <mat-form-field appearance="outline">
-      <mat-label>Email</mat-label>
-      <input type="text" matInput [formControl]="emailControl"/>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Password</mat-label>
-      <input type="password" matInput [formControl]="passwordControl"/>
-    </mat-form-field>
-    <button mat-raised-button color="primary">Submit</button>
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input type="text" matInput formControlName="email"/>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput formControlName="password"/>
+      </mat-form-field>
+      <button type="submit" mat-raised-button color="primary">Submit</button>
+      <p class="error-message" *ngIf="errorMessage != undefined">{{ errorMessage }}</p>
+    </form>
   </mat-card>
 </div>
