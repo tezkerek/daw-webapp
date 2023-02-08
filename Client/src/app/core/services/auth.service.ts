@@ -18,11 +18,11 @@ export class AuthService {
       },
     ));
   }
-}
 
-interface LoginRequestBody {
-  email: string;
-  password: string;
+  register(email: string, password: string): Observable<boolean> {
+    const body = {email, password};
+    return this.apiService.post<LoginResponseBody>('users', body).pipe(map(resp => true));
+  }
 }
 
 interface LoginResponseBody {
