@@ -1,7 +1,7 @@
 <mat-list>
   <mat-list-item *ngFor="let ad of ads">
     <h3 matListItemTitle>{{ad.title}} <span class="ad-price">${{ad.price}}</span></h3>
-    <span matListItemLine>sold by {{ad.sellerName}}</span>
+    <span matListItemLine>sold by <a [routerLink]="['/sellers/', ad.sellerName]">{{ad.sellerName}}</a></span>
     <p matListItemLine>{{ad.description}}</p>
     <p matListItemLine>Posted {{ad.dateCreated | date:'short'}}</p>
   </mat-list-item>

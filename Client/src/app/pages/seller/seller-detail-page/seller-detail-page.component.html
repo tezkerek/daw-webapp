@@ -1,0 +1,14 @@
+<div class="page-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{seller?.name}}</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p>Phone number: {{seller?.phoneNumber}}</p>
+      <mat-divider></mat-divider>
+      <h3>Ads</h3>
+      <app-ad-list *ngIf="seller != undefined" [ads]="seller.ads"></app-ad-list>
+    </mat-card-content>
+  </mat-card>
+</div>
