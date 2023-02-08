@@ -24,6 +24,6 @@ public class AdDetailDto
     public required string Title { get; set; }
     public required string Description { get; set; }
     public required decimal Price { get; set; }
-    public required string? SellerName { get; set; }
+    public required string SellerName { get; set; }
     public required DateTime DateCreated { get; set; }
 }
