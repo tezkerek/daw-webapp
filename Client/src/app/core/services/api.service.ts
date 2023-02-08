@@ -10,6 +10,10 @@ export class ApiService {
 
   constructor(private readonly httpClient: HttpClient) {
   }
+  
+  get<T>(path: string): Observable<T> {
+    return this.httpClient.get<T>(`${this.baseUrl}/${path}`);
+  }
 
   post<T>(path: string, body: object): Observable<T> {
     return this.httpClient.post<T>(`${this.baseUrl}/${path}`, body);
