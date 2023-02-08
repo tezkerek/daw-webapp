@@ -14,6 +14,12 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
         _entitySet = _dbContext.Set<TEntity>();
     }
 
+    public async Task<ICollection<TEntity>> ListAsync()
+    {
+        var rows = from row in _entitySet select row;
+        return await rows.ToListAsync();
+    }
+
     public async Task<TEntity> CreateAsync(TEntity entity)
     {
         var result = _entitySet.Add(entity);
