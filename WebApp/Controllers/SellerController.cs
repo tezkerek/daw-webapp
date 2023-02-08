@@ -45,4 +45,20 @@ public class SellerController : ControllerBase
 
         return Ok(new SellerDetailDto(createdSeller));
     }
+
+    [HttpPatch("{id}")]
+    [Authorize]
+    public async Task<IActionResult> Update(Guid id, [FromBody] SellerUpdateRequestDto sellerInfo)
+    {
+        var currentUserId = this.GetCurrentUserId();
+        if (currentUserId is null) return Unauthorized();
+
+        var seller = await _sellerService.FindByIdAsync(id);
+        
+        if (seller is null) return NotFound();
+        if (seller.UserId != currentUserId) return Forbid();
+
+        var updatedSeller = _sellerService.PatchAsync(seller, sellerInfo);
+        return Ok(updatedSeller);
+    }
 }

@@ -20,11 +20,24 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
         return await rows.ToListAsync();
     }
 
+    public async Task<TEntity?> FindByIdAsync(Guid id)
+    {
+        return await _entitySet.FirstOrDefaultAsync(entity => entity.Id == id);
+    }
+
     public async Task<TEntity> CreateAsync(TEntity entity)
     {
         var result = _entitySet.Add(entity);
         await _dbContext.SaveChangesAsync();
         return result.Entity;
+    }
+
+    public async Task<TEntity> UpdateAsync(TEntity entity)
+    {
+        var newEntity = _dbContext.Update(entity);
+        await _dbContext.SaveChangesAsync();
+
+        return newEntity.Entity;
     }
 
     public async Task DeleteAsync(TEntity entity)
