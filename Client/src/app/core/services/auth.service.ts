@@ -23,6 +23,10 @@ export class AuthService {
     const body = {email, password};
     return this.apiService.post<LoginResponseBody>('users', body).pipe(map(resp => true));
   }
+
+  isLoggedIn(): boolean {
+    return localStorage.getItem('authToken') != null;
+  }
 }
 
 interface LoginResponseBody {
