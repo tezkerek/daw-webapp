@@ -51,13 +51,9 @@ public class UserController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> Delete(Guid id)
     {
-        var currentUserId = this.GetCurrentUserId();
-        if (currentUserId == null) return Unauthorized();
-        if (id != currentUserId) return Forbid();
-
         var wasDeleted = await _userService.DeleteAsync(id);
 
         return wasDeleted switch
